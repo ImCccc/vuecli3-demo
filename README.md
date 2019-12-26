@@ -1,11 +1,9 @@
-<<<<<<< Updated upstream
-。。。。。。。。。。。。11112222
-306022598@qq.com2222
-=======
-。。。。。。。。。。。。1111333
-306022598@qq.com3333
->>>>>>> Stashed changes
-
-
-ddd
-git remote add origin https://github.com/ImCccc/test001.git
+306022598@qq.com
+306022598@qq.com
+306022598@qq.com
+git checkout head .
+git stash 
+git stash pop
+git add README.md
+git commit -am '解决冲突'
+git push origin master
