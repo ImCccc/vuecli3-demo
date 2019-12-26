@@ -8,3 +8,4 @@
 
 
 ddd
+git remote add origin https://github.com/ImCccc/test001.git
