@@ -7,3 +7,7 @@ git stash pop
 git add README.md
 git commit -am '解决冲突'
 git push origin master
+
+git checkout -- readme.txt
+
+111
