@@ -1,0 +1,51 @@
+@import '~element-ui/lib/theme-chalk/index.css';
+// 重置 dialog 组件的样式
+.el-dialog {
+  border-radius: $dialog-border-radius;
+  &__header { 
+    padding: $dialog-header-padding;
+    text-align: $dialog-header-text-align;
+    border-radius: $dialog-header-border-radius;
+    background-color: $dialog-header-background-color;
+  }
+  &__body {
+    padding:$dialog-body-padding;
+    // 弹窗表单，下拉组件和日期组件，宽度重置
+    .el-form .el-form-item__content {
+      .el-cascader,
+      .el-date-editor,
+      .el-select {
+        width: 100%;
+      }
+    }
+  }
+
+  &__footer {
+    padding: $dialog-footer-padding;
+  }
+
+  &__headerbtn {
+    top: 16px;
+    font-size: $font-size-large;
+  }
+
+  // 弹窗头部的字体样式
+  &__title,
+  &__headerbtn &__close {
+    color: $dialog-header-font-color;
+  }
+
+  // 弹窗右上角关闭按钮，重置激活
+  &__headerbtn:focus &__close,
+  &__headerbtn:hover &__close {
+    color: $dialog-header-font-color;
+  }
+}
+
+// 重置表格组件的样式
+.el-table {
+  // 表格选中某一行的背景颜色
+  &__body tr.current-row > td {
+    background-color: $table-current-row-background-color;
+  }
+}

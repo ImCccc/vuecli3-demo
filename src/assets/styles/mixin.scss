@@ -1,0 +1,52 @@
+@mixin flexBetween($align: center, $direction: row, $flex: flex) {
+  display: $flex;
+  align-items: $align;
+  flex-direction: $direction;
+  justify-content: space-between;
+}
+
+// 水平垂直居中
+@mixin flexCenter($direction: column) {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: $direction;
+}
+
+@mixin flexColumn($flexgrow: 1) {
+  display: flex;
+  flex-grow: $flexgrow;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+//多行超出省略号
+@mixin ell($width) {
+  width: $width;
+  overflow: hidden;
+  white-space: nowrap;
+  display: inline-block;
+  text-overflow: ellipsis;
+}
+
+//宽高
+@mixin wh($width, $height: $width) {
+  width: $width;
+  height: $height;
+}
+
+// 圆
+@mixin circle($wh, $background: #606266) {
+  width: $wh;
+  height: $wh;
+  border-radius: 50%;
+  background: $background;
+  display: inline-block;
+}
+
+//字体大小，颜色
+@mixin sc($size, $color) {
+  font-size: $size;
+  color: $color;
+}
+

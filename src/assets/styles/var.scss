@@ -1,0 +1,47 @@
+/* ------------------字体------------------ */
+$font-size-extra-large: 20px;
+$font-size-large: 18px;
+$font-size-medium: 16px;
+$font-size-base: 14px;
+$font-size-small: 13px;
+$font-size-extra-small: 12px;
+
+/* 颜色 */
+$color-primary: #3EA2FF;
+$color-white: #ffffff;
+$color-link: #409EFF;
+
+/*------------------左侧菜单相关------------------*/ 
+// 菜单的宽度
+$menu-width: 200px;
+// 背景颜色
+$menu-background-color: #0486fe;
+// 激活菜单的背景颜色
+$menu-background-color-active: #0159f7;
+// 鼠标移上去的背景颜色
+$menu-item-hover: #66b1ff ;
+// 菜单的字体大小
+$menu-item-font-size: $font-size-medium;
+// 菜单的字体图标
+$menu-item-font-size-icon: $font-size-medium;
+// 字体颜色
+$menu-item-font-color: #acc;
+// 激活菜单的字体颜色
+$menu-item-font-color-active: $color-white;
+
+/*------------------弹窗相关------------------*/
+// 弹窗的圆角
+$dialog-border-radius: 5px;
+$dialog-header-border-radius: $dialog-border-radius $dialog-border-radius 0px 0px;
+// 弹窗头部的背景颜色
+$dialog-header-background-color: $color-primary;
+// 弹窗头部的字体颜色
+$dialog-header-font-color: $color-white;
+// 弹窗头部的padding(决定头部的高度)
+$dialog-header-padding: 13px;
+$dialog-header-text-align: center;
+$dialog-body-padding:  20px 40px;
+$dialog-footer-padding:  10px 40px 30px;
+
+/*------------------table相关------------------*/
+$table-current-row-background-color: #FEF6EC;
