@@ -117,6 +117,9 @@
 import { clone } from '@/util/utils.js';
 import SelectAll from './SelectAll.vue';
 import PreviewImage from './PreviewImage.vue';
+import debounce from 'throttle-debounce/debounce';
+
+const SCROLL_DEBOUNCE = 20;
 
 export default {
   data() {
@@ -271,12 +274,12 @@ export default {
     onscroll() {
       try {
         this._scrollWrap = this._scrollWrap || this.$refs.table.$el.querySelector('.el-table__body-wrapper');
-        this._scrollWrap.onscroll = (e) => {
+        this._scrollWrap.onscroll = debounce(SCROLL_DEBOUNCE, (e) => {
           let target = e.target;
           if (this.useVirtualScroll) return;
           let scrollTop = target.scrollTop;
           this.scrollTop = Math.min(scrollTop, this.lastScrollTop);
-        };
+        });
       } catch (e) { }
     },
 
