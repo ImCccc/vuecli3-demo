@@ -4,7 +4,6 @@
     :style="containerStyle"
   >
     <el-table
-      border
       ref="table"
       v-bind="$attrs"
       v-on="$listeners"
@@ -60,8 +59,8 @@
             <el-image
               v-else-if="col.type === 'picture' && scope.row[col.prop]"
               :src="scope.row[col.prop]"
-              :style="col.imageStyle || imageDefaultStyle"
-              :preview-src-list="_getPreviewSrcList(col, scope)"
+              :style="col.imageStyle || 'width: 60px; height: 60px'"
+              @click.native="previewImage(col, scope)"
             ></el-image>
             <!-- 显示html方式，通常用于显示文本 -->
             <div
@@ -106,19 +105,23 @@
         slot="append"
       ></div>
     </el-table>
+    <preview-image ref="previewImageRef"></preview-image>
   </div>
 </template>
 
 <script>
+/*
+  经过测试，在谷歌浏览器4w条数据是完全没有问题，
+  ie11下，4w条数据会卡顿，不过还是可以接受
+*/
 import { clone } from '@/util/utils.js';
 import SelectAll from './SelectAll.vue';
+import PreviewImage from './PreviewImage.vue';
 
 export default {
   data() {
     return {
-      scrollTop: 0,
-      // 列表显示图片的宽高
-      imageDefaultStyle: 'width: 60px; height: 60px',
+      scrollTop: 0
     };
   },
 
@@ -141,10 +144,10 @@ export default {
       default: 30
     },
 
-    // 列表行的高度
-    trHeight: {
+    // 滚动的一次的粒度，值越大，滚动的幅度越少
+    scrollStep: {
       type: Number,
-      default: 44
+      default: 15
     },
 
     // 数据量超过多少，需要做滚动更新
@@ -166,6 +169,7 @@ export default {
   },
 
   computed: {
+    // 列表总数
     listLength() {
       return this.list.length;
     },
@@ -173,7 +177,7 @@ export default {
     // 当前显示的dom元素
     showList() {
       if (this.useVirtualScroll) return this.list;
-      let s = Math.floor(this.scrollTop / this.trHeight);
+      let s = Math.floor(this.scrollTop / this.scrollStep);
       let e = s + this.domNumber;
       return this.list.slice(s, e);
     },
@@ -186,13 +190,13 @@ export default {
     // 补全的高度
     placeholderHeight() {
       let len = this.listLength;
-      let h = len > this.domNumber ? (len - this.domNumber) * this.trHeight : 0;
+      let h = len > this.domNumber ? (len - this.domNumber) * this.scrollStep : 0;
       return { height: `${h}px` };
     },
 
     // 滚动到最后一个元素的 ScrollTop
     lastScrollTop() {
-      return Math.max(0, (this.listLength - this.domNumber) * this.trHeight);
+      return Math.max(0, (this.listLength - this.domNumber) * this.scrollStep);
     },
 
     // 位移的样式
@@ -207,7 +211,8 @@ export default {
   },
 
   components: {
-    SelectAll
+    SelectAll,
+    PreviewImage
   },
 
   watch: {
@@ -275,12 +280,16 @@ export default {
       } catch (e) { }
     },
 
-    _getText(col, scope) {
-      return col.formatter ? col.formatter(scope.row, scope) : scope.row[col.prop];
+    // 列表的图片预览，直接使用el-imge 有高度的bug
+    previewImage(col, scope) {
+      if (col.showFull !== false) {
+        let url = scope.row[col.fullProp || col.prop];
+        this.$refs.previewImageRef.show(url);
+      }
     },
 
-    _getPreviewSrcList(col, scope) {
-      return col.showFull !== false ? [scope.row[col.fullProp] || scope.row[col.prop]] : [];
+    _getText(col, scope) {
+      return col.formatter ? col.formatter(scope.row, scope) : scope.row[col.prop];
     }
   },
 
