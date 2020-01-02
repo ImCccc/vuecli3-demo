@@ -39,18 +39,18 @@
         <!-- 序号 -->
         <el-table-column
           v-else-if="col.type === 'index'"
-          :key="index"
           v-bind="col"
+          :key="index"
           :width="col.width || 55"
           :label="col.label || '序号'"
-          :index="col.index || indexMethod"
+          :index="indexMethod"
         ></el-table-column>
         <el-table-column
           v-else
+          v-bind="col"
           :key="index"
           :fixed="col.fixed || false"
           :show-overflow-tooltip="col.showOverflowTooltip !== false"
-          v-bind="col"
         >
           <template slot-scope="scope">
             <!-- 点击需要触发事件 -->
@@ -69,6 +69,10 @@
               v-else-if="col.vHtml"
               v-html="_getText(col, scope)"
             ></div>
+            <!-- 日期 -->
+            <template v-else-if="col.type ==='date'">
+              {{  scope.row[col.prop] | formatDate(col.dateFormat) }}
+            </template>
             <!-- 图片 -->
             <el-image
               v-else-if="col.type === 'picture' && scope.row[col.prop]"
@@ -102,10 +106,9 @@
                 >{{ oper.title }}</el-button>
               </template>
             </div>
-            <template v-else-if="col.fieldType ==='Date'">
-              {{  scope.row[col.prop] | formatDate(col.dateFormat) }}
+            <template v-else>
+              {{ _getText(col, scope) }}
             </template>
-            <template v-else>{{ _getText(col, scope) }}</template>
           </template>
         </el-table-column>
       </template>
